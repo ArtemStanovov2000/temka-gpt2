@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { createUseStyles } from "react-jss"
 
 const useStyles = createUseStyles({

@@ -1,14 +1,15 @@
 import { useEffect, useState, type FC } from "react"
 import { createUseStyles } from "react-jss"
-import { createToken } from "./model/createToken";
+import { generateNextToken } from "./model/createToken";
 import { useDispatch, useSelector } from "react-redux";
 import { addContext } from "./store/contextSlice";
-import { train } from "./model/train/train";
+import { train } from "./model/train";
 import { sample } from "./data/educationalSample/sample";
+import { miniSample } from "./data/educationalSample/miniSample";
 import { embeddingMatrix } from "./data/matrix/embeddingMatrix";
 import { positionMatrix } from "./data/matrix/positionMatrix";
-import { beta1layerFirst } from "./data/matrix/layer_1/beta1layerSecond";
-import { beta1layerSecond } from "./data/matrix/layer_1/beta1layerFirst";
+import { beta1layerFirst } from "./data/matrix/layer_1/beta1layerFirst";
+import { beta1layerSecond } from "./data/matrix/layer_1/beta1layerSecond";
 import { biasHidden1layer } from "./data/matrix/layer_1/biasHidden1layer";
 import { biasOutput1layer } from "./data/matrix/layer_1/biasOutput1layer";
 import { gamma1layerFirst } from "./data/matrix/layer_1/gamma1layerFirst";
@@ -155,7 +156,7 @@ export const MainPage: FC = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             if (context.length > 0) {
-                dispatch(addContext(createToken(context.toLocaleLowerCase())))
+                dispatch(addContext(generateNextToken(context.toLocaleLowerCase())))
             }
         }, 100);
         return () => clearTimeout(timer);
@@ -177,45 +178,44 @@ export const MainPage: FC = () => {
     }
 
     // Функция для запуска обучения с пакетной обработкой
-    
+
     const startTraining = () => {
         setIsTraining(true)
         setTrainingProgress(0)
         setTrainingTotal(300)
-        
-        const total = 100000;
-        const batchSize = 100000;
+
+        const total = 10000;
+        const batchSize = 10000;
         const delay = 100;
-        
-        let executed = 0;
-        
+
+        let executed = 10;
+
         function runNextBatch() {
             // Выполняем пачку вызовов
             for (let i = 0; i < batchSize && executed < total; i++) {
-                console.log(train(sample), executed);
                 executed++;
+                console.log(executed);
+                train(miniSample, 0.00002)
                 setTrainingProgress(executed)
             }
-            
-            console.log(`Выполнено: ${executed}/${total}`);
-            
+
             // Если еще не все вызовы выполнены - планируем следующую пачку
             if (executed < total) {
                 setTimeout(runNextBatch, delay);
             } else {
                 console.log("Все вызовы завершены!");
                 setIsTraining(false)
-                
+
                 // Автоматически скачиваем матрицы после завершения
                 //downloadMatrices();
             }
         }
-        
+
         // Запускаем первый пакет
         runNextBatch();
     }
 
-    
+
 
     return (
         <div className={classes.page}>

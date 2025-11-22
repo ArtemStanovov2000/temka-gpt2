@@ -1,4 +1,4 @@
-export const beta1layerFirst = [
+export const beta1layerSecond = [
     -0.0011250646383324148,
     0.000022365757434410663,
     -0.0015941321133300594,
