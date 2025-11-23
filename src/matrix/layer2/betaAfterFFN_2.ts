@@ -1,0 +1,1 @@
+export const betaAfterFFN_2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

@@ -1,9 +1,9 @@
-import MainPage from "./MainPage"
+import DarkTextDisplay from "./DarkTextDisplayю/DarkTextDisplayю"
 
 function App() {
   return (
     <div>
-      <MainPage/>
+      <DarkTextDisplay/>
     </div>
   )
 }

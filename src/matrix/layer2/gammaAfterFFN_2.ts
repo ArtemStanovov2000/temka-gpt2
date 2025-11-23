@@ -1,0 +1,1 @@
+export const gammaAfterFFN_2 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
