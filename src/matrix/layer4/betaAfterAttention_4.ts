@@ -1,0 +1,1 @@
+export const betaAfterAttention_4 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

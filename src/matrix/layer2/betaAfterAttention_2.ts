@@ -1,1 +1,1 @@
-export const betaAfterAttention_2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+export const betaAfterAttention_2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

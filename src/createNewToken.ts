@@ -1,35 +1,57 @@
 import { vocab } from "./vocab";
 
-import { tokenEmbedding } from "./matrix/tokenEmbedding";
-import { positionEmbedding } from "./matrix/positionEmbedding";
+import { tokenEmbedding } from "./matrix/tokenEmbedding"; //number[][]
+import { positionEmbedding } from "./matrix/positionEmbedding"; //number[][]
 
-import { Wk1 } from "./matrix/layer1/Wk1";
-import { Wo1 } from "./matrix/layer1/Wo1";
-import { Wq1 } from "./matrix/layer1/Wq1";
-import { Wv1 } from "./matrix/layer1/Wv1";
-import { FFN_W11 } from "./matrix/layer1/FFN_W11";
-import { FFN_W21 } from "./matrix/layer1/FFN_W21";
-import { betaAfterAttention_1 } from "./matrix/layer1/betaAfterAttention_1";
-import { gammaAfterAttention_1 } from "./matrix/layer1/gammaAfterAttention_1";
-import { betaAfterFFN_1 } from "./matrix/layer1/betaAfterFFN_1";
-import { gammaAfterFFN_1 } from "./matrix/layer1/gammaAfterFFN_1";
+import { Wk1 } from "./matrix/layer1/Wk1"; //number[][]
+import { Wo1 } from "./matrix/layer1/Wo1"; //number[][]
+import { Wq1 } from "./matrix/layer1/Wq1"; //number[][]
+import { Wv1 } from "./matrix/layer1/Wv1"; //number[][]
+import { FFN_W11 } from "./matrix/layer1/FFN_W11"; //number[][]
+import { FFN_W21 } from "./matrix/layer1/FFN_W21"; //number[][]
+import { betaAfterAttention_1 } from "./matrix/layer1/betaAfterAttention_1"; //number[]
+import { gammaAfterAttention_1 } from "./matrix/layer1/gammaAfterAttention_1"; //number[]
+import { betaAfterFFN_1 } from "./matrix/layer1/betaAfterFFN_1"; //number[]
+import { gammaAfterFFN_1 } from "./matrix/layer1/gammaAfterFFN_1"; //number[]
 
-import { Wk2 } from "./matrix/layer2/Wk2";
-import { Wo2 } from "./matrix/layer2/Wo2";
-import { Wq2 } from "./matrix/layer2/Wq2";
-import { Wv2 } from "./matrix/layer2/Wv2";
-import { FFN_W12 } from "./matrix/layer2/FFN_W12";
-import { FFN_W22 } from "./matrix/layer2/FFN_W22";
-import { betaAfterAttention_2 } from "./matrix/layer2/betaAfterAttention_2";
-import { gammaAfterAttention_2 } from "./matrix/layer2/gammaAfterAttention_2";
-import { betaAfterFFN_2 } from "./matrix/layer2/betaAfterFFN_2";
-import { gammaAfterFFN_2 } from "./matrix/layer2/gammaAfterFFN_2";
+import { Wk2 } from "./matrix/layer2/Wk2"; //number[][]
+import { Wo2 } from "./matrix/layer2/Wo2"; //number[][]
+import { Wq2 } from "./matrix/layer2/Wq2"; //number[][]
+import { Wv2 } from "./matrix/layer2/Wv2"; //number[][]
+import { FFN_W12 } from "./matrix/layer2/FFN_W12"; //number[][]
+import { FFN_W22 } from "./matrix/layer2/FFN_W22"; //number[][]
+import { betaAfterAttention_2 } from "./matrix/layer2/betaAfterAttention_2"; //number[]
+import { gammaAfterAttention_2 } from "./matrix/layer2/gammaAfterAttention_2"; //number[]
+import { betaAfterFFN_2 } from "./matrix/layer2/betaAfterFFN_2"; //number[]
+import { gammaAfterFFN_2 } from "./matrix/layer2/gammaAfterFFN_2"; //number[]
 
-import { linearLayer } from "./matrix/linearLayer";
+import { Wk3 } from "./matrix/layer3/Wk3";
+import { Wo3 } from "./matrix/layer3/Wo3";
+import { Wq3 } from "./matrix/layer3/Wq3";
+import { Wv3 } from "./matrix/layer3/Wv3";
+import { FFN_W13 } from "./matrix/layer3/FFN_W13";
+import { FFN_W23 } from "./matrix/layer3/FFN_W23";
+import { betaAfterAttention_3 } from "./matrix/layer3/betaAfterAttention_3";
+import { gammaAfterAttention_3 } from "./matrix/layer3/gammaAfterAttention_3";
+import { betaAfterFFN_3 } from "./matrix/layer3/betaAfterFFN_3";
+import { gammaAfterFFN_3 } from "./matrix/layer3/gammaAfterFFN_3";
+
+import { Wk4 } from "./matrix/layer4/Wk4";
+import { Wo4 } from "./matrix/layer4/Wo4";
+import { Wq4 } from "./matrix/layer4/Wq4";
+import { Wv4 } from "./matrix/layer4/Wv4";
+import { FFN_W14 } from "./matrix/layer4/FFN_W14";
+import { FFN_W24 } from "./matrix/layer4/FFN_W24";
+import { betaAfterAttention_4 } from "./matrix/layer4/betaAfterAttention_4";
+import { gammaAfterAttention_4 } from "./matrix/layer4/gammaAfterAttention_4";
+import { betaAfterFFN_4 } from "./matrix/layer4/betaAfterFFN_4";
+import { gammaAfterFFN_4 } from "./matrix/layer4/gammaAfterFFN_4";
+
+import { linearLayer } from "./matrix/linearLayer"; //number[][]
 
 const TEMPERATURE = 0.8
 
-const tokenize = (text: string, vocab: { [key: number]: string }): number[] => {
+export const tokenize = (text: string, vocab: { [key: number]: string }): number[] => {
     const charToIdx: { [key: string]: number } = {};
 
     // Создаем обратный словарь
@@ -178,8 +200,6 @@ const attentionLayer = (
     return output;
 };
 
-
-
 const transformerBlock = (
     input: number[][],
     layerParams: {
@@ -207,7 +227,6 @@ const transformerBlock = (
 
     // Применяем GELU активацию
     const activatedHidden = ffnHidden.map(row => row.map(gelu));  // [64, 40]
-
     const ffnOutput = matrixMultiply(activatedHidden, layerParams.FFN_W2);  // [64, 10]
 
     // 3. Residual connection + layer norm
@@ -277,7 +296,34 @@ export const createNewToken = (text: string) => {
         betaAfterFFN: betaAfterFFN_2
     });
 
-    const lastTokenEmbedding = layer2Output[tokenIndexes.length - 1];
+    const layer3Output = transformerBlock(layer2Output, {
+        Wq: Wq3,
+        Wk: Wk3,
+        Wv: Wv3,
+        Wo: Wo3,
+        FFN_W1: FFN_W13,
+        FFN_W2: FFN_W23,
+        gammaAfterAttention: gammaAfterAttention_3,
+        betaAfterAttention: betaAfterAttention_3,
+        gammaAfterFFN: gammaAfterFFN_3,
+        betaAfterFFN: betaAfterFFN_3
+    });
+
+    const layer4Output = transformerBlock(layer3Output, {
+        Wq: Wq4,
+        Wk: Wk4,
+        Wv: Wv4,
+        Wo: Wo4,
+        FFN_W1: FFN_W14,
+        FFN_W2: FFN_W24,
+        gammaAfterAttention: gammaAfterAttention_4,
+        betaAfterAttention: betaAfterAttention_4,
+        gammaAfterFFN: gammaAfterFFN_4,
+        betaAfterFFN: betaAfterFFN_4
+    });
+
+    // линейный слой
+    const lastTokenEmbedding = layer4Output[tokenIndexes.length - 1];
     const logits = vectorMatrixMultiply([lastTokenEmbedding], linearLayer)[0];
     const temperedLogits = logits.map(logit => logit / TEMPERATURE);
     const probabilities = softmax([temperedLogits])[0];

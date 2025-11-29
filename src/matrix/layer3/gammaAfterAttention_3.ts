@@ -1,0 +1,1 @@
+export const gammaAfterAttention_3 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]

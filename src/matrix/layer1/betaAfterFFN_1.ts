@@ -1,1 +1,1 @@
-export const betaAfterFFN_1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+export const betaAfterFFN_1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
